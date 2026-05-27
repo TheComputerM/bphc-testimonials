@@ -1,64 +1,55 @@
-# open-slide workspace
+# BPHC Testimonials
 
-Slides as React components. Each slide lives under `slides/<id>/index.tsx` and default-exports an array of page components. The `@open-slide/core` runtime handles layout, scaling, navigation, thumbnails, and fullscreen play mode — you just write the pages.
+I don't trust the yearbook nostalgia people to display, save, truncate or just print our testimonials properly, so here is a *app*? to scrape and convert your testimonials into a beautiful looking PDF / Website / Slide Show.
 
-## Getting started
+[Demo PDF](./demo/Demo.pdf)
 
-```bash
-pnpm install
-pnpm dev
+| | |
+|:---:|:---:|
+| ![Page 1](./demo/1.jpg) | ![Page 2](./demo/2.jpg) |
+| ![Page 3](./demo/3.jpg) | ![Page 4](./demo/4.jpg) |
+
+
+
+## Steps
+
+### Install this project
+
+Make sure you have bunjs installed, then clone this repository and install the dependencies:
+
+```sh
+bun i
 ```
 
-Then open the dev server and edit `slides/getting-started/index.tsx`, or create a new slide at `slides/<your-slide>/index.tsx`.
+This project uses [open-slide](https://open-slide.dev/) to develop the slide show.
 
-## Scripts
+### Scrape Testimonials
 
-| Command | Description |
-| --- | --- |
-| `pnpm dev` | Start the dev server with hot reload. |
-| `pnpm build` | Build a static bundle you can deploy. |
-| `pnpm preview` | Preview the built bundle locally. |
+Go to https://yearbooknostalgia.com/portal/user-testimonial and open the **Sequence** tab. Write the following code to the browser console:
 
-## Authoring a slide
-
-```tsx
-// slides/my-slide/index.tsx
-import type { Page, SlideMeta } from '@open-slide/core';
-
-const Cover: Page = () => (
-  <div style={{ width: '100%', height: '100%' }}>Hello</div>
-);
-
-export const meta: SlideMeta = { title: 'My slide' };
-export default [Cover] satisfies Page[];
+```js
+[...document.querySelectorAll('.test-sec')].map(el => ({
+       name:    el.querySelector('.postname')?.textContent.trim() ?? '',
+       email:   el.querySelector('.col-lg-6 p')?.textContent.trim() ?? '',
+       comment: el.title ?? '',
+     }))
 ```
 
-Every page renders into a fixed **1920 × 1080** canvas — design with absolute pixel values. Put images, videos, and fonts under `slides/<id>/assets/` and import them directly.
+Then right click the output and select **Copy Object**.
+Then paste the output into the ./slides/testimonials/assets/data.json, make sure its in the same shape.
 
-See [`CLAUDE.md`](./CLAUDE.md) for the full authoring guide.
+### Preview and Modify
 
-## Navigation
+To preview the slide show, run the following command:
 
-- Arrow keys / PageUp / PageDown move between pages.
-- `F` enters fullscreen play mode; Esc exits.
-- In play mode: Space / → next, ← prev.
-
-## Claude Code integration
-
-This workspace ships with Claude Code skills preconfigured under `.claude/skills/` and `.agents/skills/`. Ask Claude Code to "make slides about X" and the `create-slide` skill takes over. Use `apply-comments` to iterate via inspector-style markers inside your source.
-
-## Config
-
-Optional `open-slide.config.ts` at the workspace root:
-
-```ts
-import type { OpenSlideConfig } from '@open-slide/core';
-
-const openSlideConfig: OpenSlideConfig = {
-  port: 5173,
-};
-
-export default openSlideConfig;
+```sh
+bun dev
 ```
 
-Supported fields: `slidesDir`, `port`.
+You can then ask you AI agent to modify the slide show as needed, and the changes will be reflected in the preview.
+
+### Export
+
+There is an export option to convert the slide show into a PDF or Website on the preview itself.
+
+#### Made By TheComputerM (Mudit Somani)

@@ -1,0 +1,17 @@
+[
+  {
+    "name": "Jamie Smith",
+    "email": "jamie.smith@example.com",
+    "comment": "College completely changed how I think. The late-night study sessions, the friendships I made in the dorms, the professors who genuinely cared — it all added up to something I didn't expect. I came in unsure of my direction and left with a career, a network, and a clearer sense of who I am."
+  },
+  {
+    "name": "Alex Johnson",
+    "email": "alex.johnson@example.com",
+    "comment": "Best four years of my life!"
+  },
+  {
+    "name": "Morgan Lee",
+    "email": "morgan.lee@example.com",
+    "comment": "Joining clubs early on was the best decision I made. I met most of my closest friends through the robotics team, and those connections have followed me well beyond graduation."
+  }
+]
